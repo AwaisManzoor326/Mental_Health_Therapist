@@ -48,12 +48,40 @@ class MentalHealthChatbot:
         else:
             return "low"
 
-    def recommend_hospital(self, risk_level):
-        high_risk = ["City General Hospital", "Mental Health Center A", "Regional Hospital B"]
-        moderate_risk = ["Clinic X", "Wellness Center Y", "Community Hospital Z"]
+    def recommend_hospital(self, risk_level, country="Pakistan", city=None):
+        """
+        Returns hospital recommendations based on risk level.
+        Optionally, country and city can be provided.
+        """
+        # Example hospitals database (expand as needed)
+        hospitals_db = {
+            "Pakistan": {
+                "Islamabad": ["Pakistan Institute of Medical Sciences (PIMS)", "Islamabad Mental Health Center"],
+                "Lahore": ["Faisal Hospital Lahore", "Mental Health Institute Lahore"],
+                "Karachi": ["Karachi Mental Health Hospital", "Aga Khan University Hospital"],
+                "Default": ["National Institute of Mental Health, Pakistan"]
+            },
+            "USA": {
+                "New York": ["NYC Health + Hospitals/Bellevue", "Mount Sinai Hospital"],
+                "Los Angeles": ["UCLA Resnick Neuropsychiatric Hospital", "Cedars-Sinai Medical Center"],
+                "Default": ["National Mental Health Center, USA"]
+            }
+        }
+
+        recommendations = []
+
         if risk_level == "high":
-            return high_risk
+            if country in hospitals_db:
+                if city and city in hospitals_db[country]:
+                    recommendations = hospitals_db[country][city]
+                else:
+                    recommendations = hospitals_db[country]["Default"]
+            else:
+                recommendations = ["Please consult the nearest mental health hospital in your area."]
         elif risk_level == "moderate":
-            return moderate_risk
+            recommendations = ["Local Clinic", "Wellness Center", "Community Hospital"]
         else:
-            return []
+            recommendations = ["No hospital needed. Consider self-care and regular check-ups."]
+
+        return recommendations
+
