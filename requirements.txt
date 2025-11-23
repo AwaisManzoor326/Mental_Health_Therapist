@@ -1,0 +1,13 @@
+streamlit
+gradio
+pandas
+plotly
+PyPDF2
+python-docx
+speechrecognition
+gTTS
+pydub
+soundfile
+numpy
+requests
+huggingface-hub
